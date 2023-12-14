@@ -12,16 +12,21 @@ const getUsers = async (req = request, res = response) => {
 
 const registerUser = async (req, res = response) => {
   const { email, password, username } = req.body;
-  const user = new User({ username, email, password });
+  
+  const user = await User.findOne({ email });
+
+  if (user) return res.status(400).json({ msg: 'Email already registered.' });
+  
+  const userModel = new User({ username, email, password });
 
   const hashedPass = await bcrypt.hash(password, 10);
-  user.password = hashedPass;
+  userModel.password = hashedPass;
 
   // Guardar en BD
-  await usuario.save();
+  await userModel.save();
 
   res.json({
-    usuario,
+    userModel,
   });
 };
 

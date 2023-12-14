@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
-const { loginUser, registerUser, token } = require("../controllers/auth");
+const { loginUser, registerUser, token, getUsers } = require("../controllers/auth");
 
 /* GET users listing. */
-router.get("/", (req, res) => {
-  res.send("Hi");
-});
+router.get("/users", getUsers);
 
 router.get("/home", (req, res, next) => {
   res.render("index", { title: "Express" });
