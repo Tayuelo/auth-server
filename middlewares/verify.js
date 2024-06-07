@@ -22,11 +22,11 @@ const verifyToken = async (req = request, res = response, next) => {
   } catch (error) {
     console.error(error);
     res.status(401).json({
-      msg: "Authentication failed: 0"
+      msg: "Authentication failed: 0",
     });
   }
 };
 
 module.exports = {
-    verifyToken
-}
+  verifyToken,
+};

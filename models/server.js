@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const { dbConnection } = require("../db/config");
-const path = require("path");
 const logger = require("morgan");
 const cookieParser = require('cookie-parser');
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 class Server {
   constructor() {
@@ -23,11 +24,26 @@ class Server {
   registerMiddlewares() {
     this.app.set("views", "views");
     this.app.set("view engine", "pug");
-    this.app.use(cors());
+    this.app.use(cors({
+      origin: 'http://localhost:4200',
+      credentials: true
+    }));
     this.app.use(express.json());
     this.app.use(express.static("public"));
     this.app.use(logger("dev"));
     this.app.use(cookieParser());
+    this.app.use(
+      session({
+        secret: process.env.SUPER_SECRET_KEY,
+        resave: false,
+        saveUninitialized: true,
+        store: MongoStore.create({
+          mongoUrl: process.env.MONGODB_URI,
+          maxAge: 1000 * 60 * 60 * 24
+        }),
+        cookie: { secure: "auto", httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }
+      })
+    )
   }
 
   registerRoutes() {
