@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const { dbConnection } = require("../db/config");
 const logger = require("morgan");
-const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
@@ -31,7 +30,6 @@ class Server {
     this.app.use(express.json());
     this.app.use(express.static("public"));
     this.app.use(logger("dev"));
-    this.app.use(cookieParser());
     this.app.use(
       session({
         secret: process.env.SUPER_SECRET_KEY,

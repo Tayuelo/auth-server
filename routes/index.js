@@ -1,8 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
-const { loginUser, registerUser, logoutUser, getUsers } = require("../controllers/auth");
+const {
+  loginUser,
+  registerUser,
+  logoutUser,
+  getUsers,
+} = require("../controllers/auth");
 const isAuthenticated = require("../middlewares/is-authenticated");
+const { getServicesByBranchId } = require("../controllers/services");
 
 /* GET users listing. */
 router.get("/users", isAuthenticated, getUsers);
@@ -29,13 +35,16 @@ router.post(
   registerUser
 );
 
-router.post(
-  "/logout",
-  logoutUser
-);
+router.post("/logout", logoutUser);
 
 router.get("/is-authenticated", isAuthenticated, (req, res) => {
-  res.status(200).send({ message: "Authenticated." })
+  const user = req.session.user;
+  res.status(200).send({ message: "Authenticated.", user });
 });
+
+router.get(
+  "/branch-details/:branchId/services",
+  getServicesByBranchId
+);
 
 module.exports = router;

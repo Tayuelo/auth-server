@@ -20,7 +20,7 @@ const loginUser = async (req, res = response) => {
       });
     }
 
-    req.session.user = { id: user.uid, username: user.username };
+    req.session.user = { id: user._id, email: user.email };
     res.status(200).send({ message: "Logged in successfully" });
   } catch (error) {
     console.error(error);
