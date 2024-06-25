@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ServiceSchema = new Schema({
+const ProductSchema = new Schema({
     name: { type: String, required: [true, 'Name is mandatory']},
     details: { type: String, required: [false]},
     price: { type: Number, required: [true, 'Price is mandatory'] },
     branchId: { type: String, required: [true, 'Branch ID is required.']}
 });
 
-ServiceSchema.methods.toJSON = function() {
-    const { __v, _id, ...service } = this.toObject();
-    service.uid = _id;
-    return service
+ProductSchema.methods.toJSON = function() {
+    const { __v, _id, ...product } = this.toObject();
+    product.uid = _id;
+    return product
 };
 
-module.exports = mongoose.model("Service", ServiceSchema);
+module.exports = mongoose.model("Product", ProductSchema);

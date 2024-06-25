@@ -8,7 +8,7 @@ const {
   getUsers,
 } = require("../controllers/auth");
 const isAuthenticated = require("../middlewares/is-authenticated");
-const { getServicesByBranchId } = require("../controllers/services");
+const { getServicesByBranchId, getProductsByBranchId, getProfessionalsByBranchId } = require("../controllers/branch");
 
 /* GET users listing. */
 router.get("/users", isAuthenticated, getUsers);
@@ -45,6 +45,16 @@ router.get("/is-authenticated", isAuthenticated, (req, res) => {
 router.get(
   "/branch-details/:branchId/services",
   getServicesByBranchId
+);
+
+router.get(
+  "/branch-details/:branchId/products",
+  getProductsByBranchId
+);
+
+router.get(
+  "/branch-details/:branchId/professionals",
+  getProfessionalsByBranchId
 );
 
 module.exports = router;
