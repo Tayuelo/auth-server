@@ -10,8 +10,7 @@ const ProfessionalSchema = new Schema({
 });
 
 ProfessionalSchema.methods.toJSON = function() {
-    const { __v, _id, ...professional } = this.toObject();
-    professional.uid = _id;
+    const { __v, ...professional } = this.toObject();
     return professional
 };
 

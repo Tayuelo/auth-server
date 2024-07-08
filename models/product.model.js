@@ -9,8 +9,7 @@ const ProductSchema = new Schema({
 });
 
 ProductSchema.methods.toJSON = function() {
-    const { __v, _id, ...product } = this.toObject();
-    product.uid = _id;
+    const { __v, ...product } = this.toObject();
     return product
 };
 

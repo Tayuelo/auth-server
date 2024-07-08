@@ -9,8 +9,7 @@ const ServiceSchema = new Schema({
 });
 
 ServiceSchema.methods.toJSON = function() {
-    const { __v, _id, ...service } = this.toObject();
-    service.uid = _id;
+    const { __v, ...service } = this.toObject();
     return service
 };
 
